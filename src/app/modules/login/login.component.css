@@ -1,0 +1,82 @@
+.container{
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	position: relative;
+	justify-content: center;
+}
+
+.container2 {
+	position: absolute;
+	top: 0;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+label {
+	font-size: 40px;
+	margin: 0;
+	padding: 0;
+}
+
+input {
+	width: 400px;
+	height: 50px;
+	border-radius: 10px;
+	margin-bottom: 50px;
+	text-align: center;
+	font-size: 30px;
+}
+
+#fakelink {
+	font-size: 40px;
+	cursor: pointer;
+	text-decoration: underline;
+	color: #0000EE;
+}
+
+/* =============================================================== */
+
+#lostPasswordPopup {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	width: 740px;
+	font-size: 40px;
+	background-color: black;
+
+	height: 0px;
+	overflow: hidden;
+	border-radius: 1rem;
+	z-index: 1;
+}
+
+#lostPasswordPopup input {
+
+	font-size: 40px;
+	height: 50px;
+}
+
+p {
+	margin: 50px;
+	padding: 0;
+	line-height: 47px;
+}
+
+button {
+	margin-bottom: 50px;
+	height: 80px;
+}
+
+.div-buttons {
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: row;
+}

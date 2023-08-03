@@ -1,0 +1,32 @@
+INITIALISATION :
+
+=======================================================================
+
+Back-end:
+
+    - Dans server.js, commentez la ligne 21 et décommentez les lignes 24 à 28
+
+    - Lancer votre fichier server.js
+
+    - Connectez votre base de données via votre IDE et executez le script situé dans le fichier ./assets/countries.sql
+
+    - Crée un compte Super admin via postman :
+
+        http://localhost:8080/api/auth/signup
+
+        {
+            "email": "",
+            "password":"",
+            "firstname": "",
+            "lastname": "",
+            "id_role": "1" , // 1 - Super admin | 2 - Collaborateur | 3 - Comptable | 4 - Inactif
+            "gender": 0 // 0 - Homme | 1 - Femme
+        }
+
+    - Commentez les lignes 24 à 28 et décommentez la ligne 21
+
+=======================================================================
+
+Front-end :
+
+    Lancer votre front avec ng serve -o

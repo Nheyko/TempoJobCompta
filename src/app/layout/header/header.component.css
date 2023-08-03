@@ -1,0 +1,60 @@
+header #header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    background-color: black;
+    margin: 0 0 50px 0;
+}
+
+header h1 {
+    margin: 0 0 0 50px;
+    font-style:oblique;
+    color: white;
+    font-size: 40px;
+    margin-right: 50px;
+}
+
+header a {
+    color: white;
+    font-size: 20px;
+    margin-right: 50px;
+}
+
+header #page-name {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+header #line {
+    border-top: 5px solid red;
+    flex:auto;
+    box-shadow: 0px 5px 10px black;
+}
+
+header h2 {
+    position: absolute;
+    background-color: white;
+    margin: 0 0 0 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 30px;
+    color: red;
+    font-weight: bold;
+}
+
+#link-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#fakelink {
+    text-decoration: underline;
+}
+
+#fakelink:hover {
+    cursor: pointer;
+    color: white;
+}

@@ -1,0 +1,136 @@
+input {
+    height: 50px;
+}
+
+select {
+    height: 50px;
+    text-align: center;
+}
+
+h2 {
+    text-decoration: underline;
+    height: 50px;
+}
+
+label {
+    height: 50px;
+}
+
+#grid-container {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: 2;
+    width: 1500px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+#first-h2 {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.name {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.vat_number {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+}
+
+.siren_number {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.phone_number {
+    grid-row: 3;
+    grid-column: 2;
+    justify-self: end;
+}
+
+.other {
+    grid-row: 4;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+.other input {
+    width: 400px;
+}
+
+.legal_status {
+    grid-row: 4;
+    grid-column: 2;
+    justify-self: end;
+}
+
+.is_customer {
+    display: flex;
+    flex-direction: row;
+    grid-row: 5;
+    grid-column: 1;
+    height: 100px;
+}
+
+.is_customer label {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+.is_customer input {
+    width: 40px;
+}
+
+#second-h2 {
+    grid-row: 6;
+    grid-column: 1;
+}
+
+.adress {
+    grid-row: 7;
+    grid-column: 1;
+}
+
+.city {
+    grid-row: 7;
+    grid-column: 2;
+    justify-self: end;
+}
+
+.zipcode {
+    grid-row: 8;
+    grid-column: 1;
+}
+
+.country {
+    grid-row: 8;
+    grid-column: 2;
+    justify-self: end;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    width: 1500px;
+    margin: 0 auto;
+}
+
+.button {
+    margin-bottom: 50px;
+}

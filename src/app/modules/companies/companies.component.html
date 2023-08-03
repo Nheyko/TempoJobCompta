@@ -1,0 +1,228 @@
+<div id="grid-container">
+
+    <input class="format" type="text" name="search-company" id="input-search-company"
+        placeholder="Chercher une entreprise par nom...">
+
+    <select class="format" name="search-status" id="select-search-status">
+        <option value="">- Status -</option>
+        <option *ngFor="let status of company_legal_statutes">{{status.name}}</option>
+    </select>
+
+    <select class="format" name="search-siren" id="select-search-siren-number">
+        <option value="">- N° SIREN -</option>
+    </select>
+
+    <select class="format" name="search-vat" id="select-search-vat-number">
+        <option value="">- N° TVA -</option>
+    </select>
+
+    <select class="format" name="search-city" id="select-search-city">
+        <option value="">- Ville -</option>
+    </select>
+
+    <select class="format" name="search-zipcode" id="select-search-zipcode">
+        <option value="">- Code postal -</option>
+    </select>
+
+    <select class="format" name="search-country" id="select-search-country">
+        <option value="">- Pays -</option>
+        <option *ngFor="let country of companyCountries">{{country.name}}</option>
+    </select>
+
+    <a class="format" routerLink="../ajouter_entreprise" id="a-add-company">Ajouter entreprise</a>
+
+</div>
+
+<form [formGroup]="FeedBack" (ngSubmit)="onSubmit()">
+    <ng-container formArrayName="Companies">
+        <ng-container *ngFor="let obj of formArr.controls; let i = index" [formGroupName]="i">
+            <div id="table">
+
+                <div id="thead">
+
+                    <div class="tr">
+
+                        <div id="th-name-id" class="th th-left">
+                            <input id="input-name" formControlName="name" type="text" value="{{obj.value.name}}" required maxlength="20">
+                            <span class="initial">ID# {{obj.value.id}}</span>
+                        </div>
+
+                        <div id="th-is-customer" class="th th-right">
+                            <select formControlName="is_customer" id="select-is-customer" required>
+                                <option value="0">Client</option>
+                                <option value="1">Vendeur</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="tbody">
+
+                    <div class="tr">
+
+                        <div id="td-legal-status" class="td category">Statut juridique</div>
+                        <div id="td-legal-status-value" class="td value">
+                            <select  formControlName="id_legal_status" id="select-legal-status" required>
+                                <option value="{{status.id}}" *ngFor="let status of company_legal_statutes">
+                                    {{status.name}}
+                                </option>
+                            </select>
+
+                        </div>
+
+                        <div id="td-siren-number" class="td category">N° SIREN</div>
+                        <div id="td-siren-number-value" class="td value">
+                            <textarea formControlName="siren_number" id="textarea-siren-number" maxlength="20"></textarea>
+                        </div>
+
+                        <div id="td-vat-number" class="td category">N° TVA</div>
+                        <div id="td-vat-number-value" class="td value">
+                            <textarea formControlName="vat_number" id="textarea-vat-number" maxlength="20"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="tr">
+                        <div id="td-city" class="td category">Ville</div>
+                        <div id="td-city-value" class="td value">
+                            <textarea formControlName="city" id="textarea-city" required maxlength="255"></textarea>
+                        </div>
+
+                        <div id="td-zipcode" class="td category">Code postal</div>
+                        <div id="td-zipcode-value" class="td value">
+                            <input type="text"  formControlName="zipcode" id="input-zipcode" value="{{company.zipcode}" required maxlength="5">
+                        </div>
+
+                        <div id="td-country" class="td category">Pays</div>
+                        <div id="td-country-value" class="td value">
+                            <select  formControlName="id_country" id="select-country" required>
+                            <option value="{{country.id}}" *ngFor="let country of companyCountries">
+                                {{country.name}}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="tr">
+
+                        <div id="td-adress" class="larger-td category">Adresse</div>
+                        <div id="td-adress-value" class="larger-td value">
+                            <textarea  type="text" formControlName="adress" id="ta-adress" required maxlength="255"></textarea>
+                        </div>
+
+                        <div id="td-other" class="larger-td category">Autre (Enregistré au RCS/RM/Etc...</div>
+                        <div id="td-other-value" class="larger-td value">
+                            <textarea  type="text" formControlName="other" id="ta-other" maxlength="100"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="tr">
+
+                        <div id="td-phone-number" class="td category">Téléphone</div>
+                        <div id="td-phone-number-value" class="td value">
+                            <input type="text"  formControlName="phone_number" id="input-phone-number"
+                            value="{{obj.value.phone_number}}" maxlength="10">
+                        </div>
+
+                        <div id="td-created-at" class="td category">Date d'ajout</div>
+                        <div id="td-created-at-value" class="td value">
+                            {{obj.value.createdAt | formatDate}}
+                        </div>
+
+                        <div id="td-options" class="td category">Options</div>
+                        <div id="td-options-value" class="td value">
+                            <img class="border-buttons" src="assets/images/sauvegarder.png" alt="Bouton sauvegarder"
+                                title="Sauvegarder" (click)="onSave(i)">
+                            <img class="border-buttons" src="assets/images/close.png" alt="Bouton supprimer"
+                                title="Supprimer entreprise" (click)="onDelete()">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="errors">
+                <ng-container *ngIf="obj.get('name').hasError('required')">
+                    <span class="errorMsg">Le champ nom est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('name').hasError('maxlength')">
+                    <span class="errorMsg">Le champ nom ne doit pas dépasser 20 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('vat_number').hasError('maxlength')">
+                    <span class="errorMsg">Le champ N° TVA ne doit pas dépasser 20 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('siren_number').hasError('maxlength')">
+                    <span class="errorMsg">Le champ N° SIREN ne doit pas dépasser 20 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('phone_number').hasError('maxlength')">
+                    <span class="errorMsg">Le champ Téléphone ne doit pas dépasser 10 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('other').hasError('required')">
+                    <span class="errorMsg">Le champ autre est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('id_legal_status').hasError('required')">
+                    <span class="errorMsg">Le champ Status est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('is_customer').hasError('required')">
+                    <span class="errorMsg">Le champ Vendeur / Client est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('adress').hasError('required')">
+                    <span class="errorMsg">Le champ Adresse est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('adress').hasError('maxlength')">
+                    <span class="errorMsg">Le champ Adresse ne doit pas dépasser 255 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('city').hasError('required')">
+                    <span class="errorMsg">Le champ Ville est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('city').hasError('maxlength')">
+                    <span class="errorMsg">Le champ Ville ne doit pas dépasser 255 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('zipcode').hasError('required')">
+                    <span class="errorMsg">Le champ Code postal est requis.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('zipcode').hasError('maxlength')">
+                    <span class="errorMsg">Le champ Code postal ne doit pas dépasser 5 caractères.</span>
+                    <br />
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('id_country').hasError('required')">
+                    <span class="errorMsg">Le champ Pays est requis.</span>
+                    <br />
+                </ng-container>
+            </div>
+
+        </ng-container>
+    </ng-container>
+</form>

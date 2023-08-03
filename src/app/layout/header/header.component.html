@@ -1,0 +1,35 @@
+<header>
+    <div id="header">
+      <h1>TempoJobCompta</h1>
+
+      <nav id="link-container">
+
+        <div *ngIf="isLoggedIn">
+          <a routerLink="/">Accueil</a>
+        </div>
+
+        <div *ngIf="!isLoggedIn">
+          <a routerLink="/connexion">Accueil</a>
+        </div>
+
+        <div *ngIf="isLoggedIn && isUserRoleSuperAdmin">
+          <a routerLink="/admin">Admin</a>
+        </div>
+
+        <div *ngIf="isLoggedIn">
+        <a [routerLink]="['factures']" [queryParams]="{currentPage}">Factures</a>
+        </div>
+
+        <div *ngIf="isLoggedIn">
+          <a id="fakelink" (click)="logout()">Déconnexion</a>
+        </div>
+
+      </nav>
+    </div>
+
+    <div id="page-name">
+      <div id="line"></div>
+      <h2>{{headerService.pageName}}</h2>
+    </div>
+
+  </header>

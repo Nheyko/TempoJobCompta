@@ -1,0 +1,139 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div id="center">
+        <h2>Facture</h2>
+
+        <div class="form-group ">
+            <label for="invoice-name">Intitulé de la facture</label>
+            <input type="text" formControlName="name" id="invoice-name" required maxlength="20"
+            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                <div *ngIf="f['name'].errors['required']">
+                    Le nom est requis.
+                </div>
+                <div *ngIf="f['name'].errors['maxlength']">
+                    Le nom ne doit pas dépasser 20 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="comment">Commentaire</label>
+            <textarea formControlName="comment" id="comment"
+            [ngClass]="{ 'is-invalid': submitted && f['comment'].errors }"></textarea>
+        </div>
+
+        <div id="grid-container-top">
+
+            <h2 id="h2-vendor">Vendeur</h2>
+
+            <div class="label-select">
+                <label for="vendor-name">Nom</label>
+                <select formControlName="id_vendor" id="vendor-name" required
+                [ngClass]="{ 'is-invalid': submitted && f['id_vendor'].errors }">
+                    <option value="">- Entreprise -</option>
+                    <option value="" *ngFor="let company of companies">{{company.name}}</option>
+                </select>
+                <div *ngIf="submitted && f['id_vendor'].errors" class="invalid-feedback">
+                    <div *ngIf="f['id_vendor'].errors['required']">
+                        Le vendeur est requis.
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="h2-customer">Client</h2>
+
+            <div class="label-select" id="customer">
+                <label for="customer-name">Nom</label>
+                <select formControlName="id_customer" id="customer-name" required
+                [ngClass]="{ 'is-invalid': submitted && f['id_customer'].errors }">
+                    <option value="">- Entreprise -</option>
+                    <option value="" *ngFor="let company of companies">{{company.name}}</option>
+                </select>
+                <div *ngIf="submitted && f['id_customer'].errors" class="invalid-feedback">
+                    <div *ngIf="f['id_customer'].errors['required']">
+                        Le client est requis.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="add-company">
+            <a routerLink="/ajouter_entreprise">Ajouter entreprise</a>
+        </div>
+
+        <div id="id-date">
+            <span id="id-invoice">Facture N° (ID)</span>
+            <br>
+            <span>Date: (Date et heure actuelle)</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th id="th-designation">Désignation des produits ou prestations</th>
+                    <th class="white-space"></th>
+                    <th id="th-price">Prix Unitaire HT</th>
+                    <th class="white-space"></th>
+                    <th id="th-quantity">Quantité</th>
+                    <th class="white-space"></th>
+                    <th id="th-total">Total HT</th>
+                    <th class="white-space"></th>
+                    <th id="th-options">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="9"><span id="add-line" (click)="addLine()">Ajouter ligne</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="grid-container-bottom">
+            <div class="form-group" id="div-vat-number">
+                <label for="vat-number" id="label-vat-number">Montant de TVA (En %)</label>
+                <input type="number" formControlName="vat_rate" id="vat-number" required min="0" max="100" value="0" step=".01"
+                [ngClass]="{ 'is-invalid': submitted && f['vat_rate'].errors }">
+                <div *ngIf="submitted && f['vat_rate'].errors" class="invalid-feedback">
+                    <div *ngIf="f['vat_rate'].errors['required']">
+                        Le taux de tva est requis.
+                    </div>
+                </div>
+            </div>
+
+            <div class="div-price">
+                <div class="price-name">
+                    <span>TOTAL HT</span>
+                </div>
+                <div class="price-value">
+                    <span>1800,00€</span>
+                </div>
+
+            </div>
+            <div class="div-price">
+                <div class="price-name">
+                    <span class="price-name">TOTAL TTC</span>
+                </div>
+                <div class="price-value">
+                    <span>2160,00€</span>
+                </div>
+            </div>
+
+            <div id="upload-invoice-picture">
+                <button type="button">Héberger photo</button>
+            </div>
+            
+            <div id="note">
+                <p>Note: Seul le format PDF est supporté</p>
+            </div>
+
+        </div>
+
+        <div id="buttons">
+            <button type="button" class="button" (click)="onSubmit()">Editer facture</button>
+            <button type="button" class="button" (click)="onSubmit()">Créer brouillon</button>
+            <button type="button" class="button" (click)="onReset()">Reset</button>
+            <button type="button" class="button" (click)="back()">Annuler</button>
+        </div>
+    </div>
+</form>

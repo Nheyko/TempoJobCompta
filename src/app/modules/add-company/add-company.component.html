@@ -1,0 +1,158 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div id="grid-container">
+
+        <h2 class="form-group" id="first-h2">Entreprise</h2>
+
+        <div class="form-group name">
+            <label for="name">Nom</label>
+            <input type="text" formControlName="name" id="name" required maxlength="20"
+            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                <div *ngIf="f['name'].errors['required']">
+                    Le nom est requis.
+                </div>
+                <div *ngIf="f['name'].errors['maxlength']">
+                    Le nom ne doit pas dépasser 20 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group vat_number">
+            <label for="vat_number">Numéro de TVA</label>
+            <input type="text" formControlName="vat_number" id="vat_number" maxlength="20"
+            [ngClass]="{ 'is-invalid': submitted && f['vat_number'].errors }">
+            <div *ngIf="submitted && f['vat_number'].errors" class="invalid-feedback">
+                <div *ngIf="f['vat_number'].errors['maxlength']">
+                    Le numéro de TVA ne doit pas dépasser 20 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group siren_number">
+            <label for="siren_number">Numéro de SIREN</label>
+            <input type="text" formControlName="siren_number" id="siren_number" required maxlength="20"
+            [ngClass]="{ 'is-invalid': submitted && f['siren_number'].errors }">
+            <div *ngIf="submitted && f['siren_number'].errors" class="invalid-feedback">
+                <div *ngIf="f['siren_number'].errors['required']">
+                    Le numéro de SIREN est requis.
+                </div>
+                <div *ngIf="f['siren_number'].errors['maxlength']">
+                    Le numéro de SIREN ne dois pas dépasser 20 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group phone_number">
+            <label for="phone_number">Numéro de téléphone</label>
+            <input type="text" formControlName="phone_number" id="phone_number" maxlength="10"
+            [ngClass]="{ 'is-invalid': submitted && f['phone_number'].errors }">
+            <div *ngIf="submitted && f['phone_number'].errors" class="invalid-feedback">
+                <div *ngIf="f['phone_number'].errors['maxlength']">
+                    Le numéro de téléphone ne doit pas dépasser 10 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="other">
+            <label for="other">Autre (Enregistré au RCS/RM</label>
+            <input type="text" formControlName="other" id="other" maxlength="255"
+            [ngClass]="{ 'is-invalid': submitted && f['other'].errors }">
+            <div *ngIf="submitted && f['other'].errors" class="invalid-feedback">
+                <div *ngIf="f['other'].errors['maxlength']">
+                    Autre ne doit pas dépasser 255 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group legal_status">
+            <label for="legal_status">Forme juridique</label>
+            <select formControlName="legal_status" id="legal_status" required
+            [ngClass]="{ 'is-invalid': submitted && f['legal_status'].errors }">
+                <option value="">- Forme juridique -</option>
+                <option *ngFor="let legalStatus of companyLegalStatuses" value="{{legalStatus.id}}">{{legalStatus.name}}</option>
+            </select>
+            <div *ngIf="submitted && f['legal_status'].errors" class="invalid-feedback">
+                <div *ngIf="f['legal_status'].errors['required']">
+                    Le statut juridique est requis.
+                </div>
+            </div>
+        </div>
+
+        <div class="is_customer">
+            <input type="checkbox" id="is_customer" formControlName="is_customer" required
+            [ngClass]="{ 'is-invalid': submitted && f['is_customer'].errors }">
+            <label for="is_customer">Cochez si c'est un client, laissez vide si c'est un vendeur.</label>
+            <div *ngIf="submitted && f['is_customer'].errors" class="invalid-feedback">
+                <div *ngIf="f['is_customer'].errors['required']">
+                    Ce champ est requis.
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="form-group" id="second-h2">Localisation</h2>
+
+        <div class="form-group adress">
+            <label for="adress">Adresse</label>
+            <input type="text" formControlName="adress" id="adress" required maxlength="255"
+            [ngClass]="{ 'is-invalid': submitted && f['adress'].errors }">
+            <div *ngIf="submitted && f['adress'].errors" class="invalid-feedback">
+                <div *ngIf="f['adress'].errors['required']">
+                    L'adresse est requis.
+                </div>
+                <div *ngIf="f['adress'].errors['maxlength']">
+                    L'adresse ne doit pas dépasser 255 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group city">
+            <label for="city">Ville</label>
+            <input type="text" formControlName="city" id="city" required maxlength="255"
+            [ngClass]="{ 'is-invalid': submitted && f['city'].errors }">
+            <div *ngIf="submitted && f['city'].errors" class="invalid-feedback">
+                <div *ngIf="f['city'].errors['required']">
+                    La ville est requise.
+                </div>
+                <div *ngIf="f['city'].errors['maxlength']">
+                    La ville ne doit pas dépasser 255 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group zipcode">
+            <label for="zipcode">Code postal</label>
+            <input type="text" formControlName="zipcode" id="zipcode" required maxlength="5"
+            [ngClass]="{ 'is-invalid': submitted && f['zipcode'].errors }">
+            <div *ngIf="submitted && f['zipcode'].errors" class="invalid-feedback">
+                <div *ngIf="f['zipcode'].errors['required']">
+                    Le code postal est requis.
+                </div>
+                <div *ngIf="f['zipcode'].errors['maxlength']">
+                    Le code postal ne doit pas dépasser 5 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group country">
+            <label for="country">Pays</label>
+            <select formControlName="country" id="country" required
+            [ngClass]="{ 'is-invalid': submitted && f['country'].errors }">
+                <option value="">- Pays -</option>
+                <option *ngFor="let country of companyCountries" value="{{country.id}}">{{country.name}}</option>
+            </select>
+            <div *ngIf="submitted && f['country'].errors" class="invalid-feedback">
+                <div *ngIf="f['country'].errors['required']">
+                    Le pays est requis.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="buttons">
+        <button class="button" type="button" (click)="onSubmit()">Créer</button>
+        <button class="button" type="button" (click)="onReset()">Reset</button>
+        <button class="button" type="button" (click)="back()">Annuler</button>
+    </div>
+
+</form>

@@ -1,0 +1,123 @@
+<div id="wrapper">
+    <input type="text" name="search-invoice" id="search-invoice" placeholder="Chercher une facture par nom...">
+    <select name="search-date" id="search-date">
+        <option value="">- Interval de date -</option>
+    </select>
+    <select name="search-status" id="search-status">
+        <option value="">- Status -</option>
+        <option value="" *ngFor="let state of invoiceStates">{{state.name}}</option>
+    </select>
+    <select name="search-author" id="search-author">
+        <option value="">- Auteur -</option>
+    </select>
+    <select name="search-price" id="search-price">
+        <option value="">- Fourchette de montant -</option>
+    </select>
+    <a routerLink="../ajouter_facture" id="add-invoice">Ajouter facture</a>
+</div>
+
+<div>
+    <ng-container *ngFor="let invoice of invoices, let i = index">
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4" class="th-left" id="input-name">
+                        {{invoice.name}}
+                    </th>
+                    <th colspan="2" class="th-right">
+                        <span class="initial">ID# {{invoice.id}}</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="category" id="author">Auteur</td>
+                    <td class="value" id="author-value" class="td-center">
+                        {{invoice.user.firstname}}
+                    </td>
+                    <td class="category break" id="edit-date">Dernière modification</td>
+                    <td class="value break" id="add-edit-value">{{invoice.updatedAt | formatDate}}</td>
+                    <td class="category" id="status">Status</td>
+                    <td class="value" id="status-value">
+                        {{invoice.id_state | stringifyState}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="category" id="total-duty-free">Montant Total TTC</td>
+                    <td class="value" id="total-duty-free-value">1899,99€</td>
+                    <td class="category" id="add-date">Date d'ajout</td>
+                    <td class="value break" id="add-date-value">{{ invoice.createdAt | formatDate }}</td>
+                    <td class="category" id="options">Options</td>
+                    <td class="value" id="options-value">
+                        <div class="div-options-value">
+                            <img class="border-buttons" src="assets/images/commentaire.png" alt="Bouton commenter"
+                                title="Commentaire" (click)="openCommentWindow(invoice)">
+                            <img class="border-buttons" src="assets/images/editer.png" alt="Bouton éditer"
+                                title="Editer">
+                            <img class="border-buttons" src="assets/images/download.png" alt="Bouton télécharger"
+                                title="Télécharger">
+                            <img class="border-buttons" src="assets/images/close.png" alt="Bouton supprimer"
+                                title="Suprimmer facture">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+
+    <div id="div-page">
+
+        <a *ngIf="currentPage==1" disabled>&#60;&#60;</a>
+
+        <a *ngIf="currentPage!=1" [routerLink]="['../factures']" [queryParams]="{currentPage:1}">&#60;&#60;</a>
+
+        <a [routerLink]="['../factures']"
+            [queryParams]="currentPage>1?{currentPage:(transformInt(currentPage)-1)}:{currentPage:currentPage}">&#60;</a>
+
+        <input id="inputPage" type="text" min="1" max="{{totalPage}}" value="{{currentPage}}"
+            (input)="onChangePage()" />
+
+        <a [routerLink]="['../factures']"
+            [queryParams]="currentPage<totalPage?{currentPage:(transformInt(currentPage)+1)}:{currentPage:currentPage}">&#62;</a>
+
+        <a *ngIf="currentPage!=totalPage" [routerLink]="['../factures']"
+            [queryParams]="{currentPage:totalPage}">&#62;&#62;</a>
+
+        <a *ngIf="currentPage==totalPage" disabled>&#62;&#62;</a>
+
+    </div>
+</div>
+
+<div id="wrapper-comment-window">
+    <div id="comment-window">
+        <div id="comment-window-top">
+            <span>ID : {{invoiceId}}</span>
+            <span>Nom : {{invoiceName}}</span>
+            <span>Commentaire</span>
+        </div>
+
+        <div id="comment-window-middle">
+            <textarea name="comment-window-text-area" id="comment-window-textarea">{{invoiceComment}}</textarea>
+        </div>
+
+        <div id="comment-window-bottom">
+            <button type="button" (click)="saveComment(invoiceId)">Editer</button>
+            <button type="button" class="red" (click)="openConfirmDeleteWindow()">Supprimer</button>
+            <button type="button" (click)="closeCommentWindow()">Fermer</button>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper-delete-window">
+    <div id="confirm-delete-window">
+        <div id="confirm-delete-window-top">
+            <p>Êtes vous sûr de vouloir supprimer ce commentaire ?</p>
+        </div>
+        <div id="confirm-delete-window-bottom">
+            <button type="button" class="red" (click)="confirmDelete(invoiceId)">Supprimer</button>
+            <button type="button" (click)="closeDeleteConfirmWindow()">Fermer</button>
+        </div>
+    </div>
+</div>

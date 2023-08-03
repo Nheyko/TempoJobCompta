@@ -1,0 +1,56 @@
+<div class="container">
+
+  <div class="container2">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <div class="form-group email">
+        <input formControlName="email" type="email" id="email" placeholder="Enter email" required maxlength="100"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': submitted && f['email'].errors}">
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div *ngIf="f['email'].errors['maxlength']">
+            L'mail ne doit pas dépasser 100 caractères.
+          </div>
+          <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+        </div>
+      </div>
+      <label for="password">Mot de passe</label>
+      <div class="form-group password">
+        <input type="password" formControlName="password" id="password" placeholder="password" required minlength="8"
+          maxlength="20" [ngClass]="{ 'is-invalid': submitted && f['password'].errors}">
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors['required']">Password is required</div>
+          <div *ngIf="f['password'].errors['minlength']">
+            Le mot de passe doit faire au moins 8 caratères
+          </div>
+          <div *ngIf="f['password'].errors['maxlength']">
+            Le mot de passe ne doit pas dépasser 20 caractères.
+          </div>
+        </div>
+      </div>
+      <button type="submit">Connexion</button>
+      <div class="form-group">
+        <div class="alert alert-danger" role="alert" *ngIf="submitted && isLoginFailed">
+          Connection interrompue {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+    <span id="fakelink" (click)="showForgotPassword()">Mot de passe oublié ?</span>
+  </div>
+    <form action="" method="post">
+      <div id="lostPasswordPopup">
+        <div id="lostPasswordPopupText">
+          <p>
+            Veuillez saisir une adresse mail à laquelle
+            nous pourrons envoyer une demande de
+            réinitialisation de mot de passe.
+          </p>
+        </div>
+        <input type="email" name="inputLostPassword" id="inputLostPassword">
+        <div class="div-buttons">
+          <button type="button" (click)="sendEmail()">Envoyer</button>
+          <button type="button" (click)="closeForgotPassword()">Annuler</button>
+        </div>
+      </div>
+    </form>
+</div>

@@ -1,0 +1,109 @@
+<div id="top">
+    <input type="text" name="search-user" id="search-user" placeholder="Chercher un utilisateur par nom...">
+    <a routerLink="../ajouter_utilisateur" id="add-user">Ajouter utilisateur</a>
+</div>
+
+<form [formGroup]="FeedBack" (ngSubmit)="onSubmit()">
+    <ng-container formArrayName="Users">
+        <ng-container *ngFor="let obj of formArr.controls; let i = index" [formGroupName]="i">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2" id="th-left">
+                            <select class="tab-select tab-select" formControlName="civ" id="select-civ" required>
+                                <option value="0">Mr.</option>
+                                <option value="1">Mme.</option>
+                            </select>
+                        </th>
+                        <th colspan="2">
+                            <input type="text" class="tab-input" formControlName="lastname" id="input-lastname" required maxlength="20">
+                        </th>
+                        <th colspan="2" id="th-right">
+                            <span class="initial">ID# {{obj.value.id}} </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="category" id="firstname">Prénom</td>
+                        <td class="value" id="firstname-value" class="td-center">
+                            <input type="text" class="tab-input-value" formControlName="firstname" id="input-firstname" required maxlength="20">
+                        </td>
+                        <td class="category" id="email">Email</td>
+                        <td class="value" id="email-value">
+                            <textarea formControlName="email" id="ta-email" class="ta" wrap="hard" required maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></textarea>
+                        </td>
+                        <td class="category" id="role">Rôle</td>
+                        <td class="value" id="role-value">
+                            <select class="tab-select tab-select-value" formControlName="id_role" id="select-role" required>
+                                <option *ngFor="let role of userRoles" value="{{role.id}}">{{role.id | stringifyRole:
+                                    obj.value.civ}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="add-date">Date d'ajout</td>
+                        <td class="value" id="add-date-value">{{obj.value.createdAt | formatDate}}</td>
+                        <td class="category" id="inactiv-date">Inactif depuis le</td>
+                        <td class="value" id="inactiv-date-value">{{obj.value.updatedAt | formatDate}}</td>
+                        <td class="category" id="options">Options</td>
+                        <td class="value" id="options-value">
+                            <div class="div-options-value">
+                                <img class="border-buttons" src="assets/images/sauvegarder.png" alt="Bouton sauvegarder"
+                                    title="Sauvegarder" (click)="onSave(i)">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="errors">
+                <ng-container *ngIf="obj.get('civ').hasError('required')">
+                    <span class="errorMsg">Le champ civilité est requis.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('lastname').hasError('required')">
+                    <span class="errorMsg">Le champ nom est requis.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('lastname').hasError('maxlength')">
+                    <span class="errorMsg">Le champ nom ne dois pas dépasser 20 caractères.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('firstname').hasError('required')">
+                    <span class="errorMsg">Le champ prénom est requis.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('firstname').hasError('maxlength')">
+                    <span class="errorMsg">Le champ prénom ne dois pas dépasser 20 caractères.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('email').hasError('required')">
+                    <span class="errorMsg">Le champ email est requis.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('email').hasError('email')">
+                    <span class="errorMsg">L'email n'est pas au bon format.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('email').hasError('maxlength')">
+                    <span class="errorMsg">Le champ email ne dois pas dépasser 100 caractères.</span>
+                    <br/>
+                </ng-container>
+
+                <ng-container *ngIf="obj.get('id_role').hasError('required')">
+                    <span class="errorMsg">Le champ rôle est requis.</span>
+                    <br/>
+                </ng-container>
+            </div>
+
+        </ng-container>
+    </ng-container>
+</form>
